@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <link rel="stylesheet" href="css/fpage.css"> -->
+  <img src="Bg.jpg" alt="" srcset="">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      align-items: center;
+    }
+
+    img{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.8;
+    }
+
+
+    form {
+      background-color: #fff;
+      padding: 20px;
+      margin: 25px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      width: 20%;
+    }
+
+    label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+      width: 95%;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #3e8e41;
+    }
+
+    div {
+      color: red;
+      font-size: 18px;
+      margin-left: 5%;
+    }
+
+    table {
+      display: none;
+      background: rgba(255,255,255,0.7);
+      margin: auto;
+      text-align: center;
+      border-collapse: collapse;
+      width: 28%;
+    }
+
+    
+#table th, #table td {
+  padding: 12px;
+  text-align: center;
+}
+
+#table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+#table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#table tr:hover {
+  background-color: #ddd;
+}
+
+#table td:nth-child(2), #table td:nth-child(4) {
+  font-weight: bold;
+}
+
+#table td:nth-child(4) {
+  color: green;
+}
+  </style>
+
+</head>
+
+<body>
+  <form name="cropForm" onsubmit="return validateForm()" action="">
+    <label>Crop Name:</label>
+    <input type="text" name="cropName" id="cropName" required>
+    <div id="cerror"></div>
+    <br>
+
+    <label>Land Area (in acres):</label>
+    <input type="text" name="landArea" id="landArea" required>
+    <div id="lerror"></div>
+    <br>
+
+    <label>District:</label>
+    <select name="district" id="district" required>
+      <option value="">---Select a district---</option>
+      <option>Ambala</option>
+      <option>Bhiwani</option>
+      <option>Charkhi Dadri</option>
+      <option>Faridabad</option>
+      <option>Fatehabad</option>
+      <option>Gurugram</option>
+      <option>Hisar</option>
+      <option>Jhajjar</option>
+      <option>Jind</option>
+      <option>Kaithal</option>
+      <option>Karnal</option>
+      <option>Kurukshetra</option>
+      <option>Palwal</option>
+      <option>Panipat</option>
+      <option>Mahendargarh</option>
+      <option>Nuh</option>
+      <option>Panchkula</option>
+      <option>Rewari</option>
+      <option>Rohtak</option>
+      <option>Sirsa</option>
+      <option>Sonipat</option>
+      <option>Ymunanagar</option>
+    </select>
+    <div id="derror"></div>
+    <br><br>
+
+    <button id="submit" >Submit</button>
+  </form>
+
+
+  <table id="table" border="1">
+    <thead>
+      <tr>
+        <th>Crop Name</th>
+        <th>Land Area (in acres)</th>
+        <th>District</th>
+        <th>Estimation</th>
+      </tr>
+    </thead>
+  </table>
+
+  <script type="text/javascript">
+    function printError(elemId, errMsg) {
+      document.getElementById(elemId).innerHTML = errMsg;
+    }
+    function validateForm() {
+      var cpname = cropForm.cropName.value;
+      var laname = cropForm.landArea.value;
+      var diname = cropForm.district.value;
+
+      var crpError = landError = disError = true;
+
+      if (cpname.toLowerCase() != "wheat") {
+        printError("cerror", "Please enter the crop name as wheat.");
+        return false;
+      }
+
+      if (isNaN(laname) || laname == "") {
+        printError("lerror", "Please enter a valid land area in numbers.");
+        return false;
+      }
+
+      if (district == "") {
+        printError("derror", "Please select a district.");
+        return false;
+      }
+      if ((crpError || landError || disError) == true) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+    document.getElementById("submit").onclick = function () {
+      document.getElementById("table").style.display = "block";
+
+      var table = document.getElementById("table");
+      var row = table.insertRow(-1);
+      var cropName = row.insertCell(0);
+      var landArea = row.insertCell(1);
+      var district = row.insertCell(2);
+      var estimation = row.insertCell(3);
+
+      cropName.innerHTML = document.getElementById("cropName").value;
+      landArea.innerHTML = document.getElementById("landArea").value;
+      district.innerHTML = document.getElementById("district").value;
+      estimation.innerHTML = document.getElementById("landArea").value * 24;
+
+      return false;
+    }
+  </script>
+</body>
+
+<script src="js/app.js"
+type = "application/javascript" ></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.4.0/dist/web3.min.js"></script>
+
+
+</html>
